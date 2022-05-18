@@ -18,7 +18,7 @@ export function EditableLabel(props: EditableLabelProps) {
 
   const [currentText, setCurrentText] = useState(text);
   const [className, setClassName] = useState<string>('EditableLabel');
-  const ref = useRef<React.RefObject<HTMLDivElement>>();
+  const ref = useRef<HTMLDivElement>();
 
   const textContent = `${text}`;
 
@@ -45,13 +45,17 @@ export function EditableLabel(props: EditableLabelProps) {
 
   const onSave = () => {
     console.log('saving...', currentText);
-    setCurrentText(ref.current.innerHTML);
+    if (ref.current) {
+      const current = ref.current as unknown as HTMLDivElement;
+      console.log(current);
+      setCurrentText(current.innerHTML);
+    }
     setEditable(false);
   }
 
   return (
     <div
-      ref={ref}
+      ref={ref as unknown as React.LegacyRef<HTMLDivElement>}
       className={className}
       contentEditable={editable}
       onBlur={onSave}
