@@ -1,5 +1,18 @@
 .Editable
-    border: 2px dashed #4c6b30
+    display: inline-block
+
+    &-active
+        border: 2px dashed #4c6b30
 
     &:hover
         cursor: text
+
+    &-edit-button
+        position: relative
+        display: inline
+    
+    &-edit-icon
+        width: 16px
+        height: 16px
+        position: absolute
+        top: -0.5em

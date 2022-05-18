@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+import { Editable } from '../Editable';
+
 import './EditableLabel.sass';
 
 export interface EditableLabelProps {
@@ -14,22 +16,12 @@ export function EditableLabel(props: EditableLabelProps) {
   } = props;
 
   const [isEditable, setIsEditable] = useState(false);
-  const [isOver, setIsOver] = useState(false);
   const [currentText, setCurrentText] = useState(text);
-  const [className, setClassName] = useState<string>('EditableLabel');
   const ref = useRef<HTMLDivElement>();
 
   const textContent = `${text}`;
 
-  useEffect(() => {
-    let newClassName = 'EditableLabel-field';
-    if (isEditable) {
-      newClassName = newClassName.concat(' Editable');
-    }
-    setClassName(newClassName);
-    console.log('change className to', newClassName);
-  }, [isEditable, setClassName]);
-
+  // If `currentText` change, we save that value
   useEffect(() => {
     save(currentText);
   }, [currentText]);
@@ -40,10 +32,6 @@ export function EditableLabel(props: EditableLabelProps) {
       // console.log(ref.current.innerHTML);
       onSave();
     }
-  }
-
-  const onEditIconClick = (e: React.MouseEvent<HTMLElement>) => {
-    setIsEditable(true);
   }
 
   const onSave = () => {
@@ -58,32 +46,21 @@ export function EditableLabel(props: EditableLabelProps) {
   }
 
   return (
-    <div
-      className="EditableLabel"
-      onMouseEnter={() => setIsOver(true)}
-      onMouseLeave={() => setIsOver(false)}
+    <Editable
+      editable={isEditable}
+      onEditable={setIsEditable}
     >
       <div
         ref={ref as unknown as React.LegacyRef<HTMLDivElement>}
-        className={className}
+        className="EditableLabel"
         contentEditable={isEditable}
         onBlur={onSave}
         onKeyDown={keyDownHandler}
-        suppressContentEditableWarning={true}
         dangerouslySetInnerHTML={{__html: text}}
+        suppressContentEditableWarning={true}
       >
         {/* {textContent || '<Empty field>'} */}
       </div>
-      <div className="EditableLabel-logo">
-        <img
-          style={{
-            display: isOver ? 'inline' : 'none'
-          }}
-          src="./editable.svg"
-          className="icon"
-          onClick={onEditIconClick}
-        />
-      </div>
-    </div>
+    </Editable>
   );
 }
