@@ -48,7 +48,8 @@ export function EditableLabel(props: EditableLabelProps) {
     if (ref.current) {
       const current = ref.current as unknown as HTMLDivElement;
       console.log(current);
-      setCurrentText(current.innerHTML);
+      // setCurrentText(current.innerHTML);
+      setCurrentText(current.textContent || '');
     }
     setEditable(false);
   }
