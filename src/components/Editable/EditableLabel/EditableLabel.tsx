@@ -1,21 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
+
+import '../Editable.sass';
 import './EditableLabel.sass';
 
 export interface EditableLabelProps {
   text: string,
   save: (text: string) => void,
-  editable?: boolean,
-  setEditable: (editable: boolean) => void,
 };
 
 export function EditableLabel(props: EditableLabelProps) {
   const {
     text,
     save,
-    editable=false,
-    setEditable,
   } = props;
 
+  const [isEditable, setIsEditable] = useState(false);
   const [isOver, setIsOver] = useState(false);
   const [currentText, setCurrentText] = useState(text);
   const [className, setClassName] = useState<string>('EditableLabel');
@@ -25,12 +24,12 @@ export function EditableLabel(props: EditableLabelProps) {
 
   useEffect(() => {
     let newClassName = 'EditableLabel-field';
-    if (editable) {
+    if (isEditable) {
       newClassName = newClassName.concat(' Editable');
     }
     setClassName(newClassName);
     console.log('change className to', newClassName);
-  }, [editable, setClassName]);
+  }, [isEditable, setClassName]);
 
   useEffect(() => {
     save(currentText);
@@ -44,6 +43,10 @@ export function EditableLabel(props: EditableLabelProps) {
     }
   }
 
+  const onEditIconClick = (e: React.MouseEvent<HTMLElement>) => {
+    setIsEditable(true);
+  }
+
   const onSave = () => {
     console.log('saving...', currentText);
     if (ref.current) {
@@ -52,7 +55,7 @@ export function EditableLabel(props: EditableLabelProps) {
       setCurrentText(current.innerHTML);
       // setCurrentText(current.textContent || '');
     }
-    setEditable(false);
+    setIsEditable(false);
   }
 
   return (
@@ -64,7 +67,7 @@ export function EditableLabel(props: EditableLabelProps) {
       <div
         ref={ref as unknown as React.LegacyRef<HTMLDivElement>}
         className={className}
-        contentEditable={editable}
+        contentEditable={isEditable}
         onBlur={onSave}
         onKeyDown={keyDownHandler}
         suppressContentEditableWarning={true}
@@ -79,6 +82,7 @@ export function EditableLabel(props: EditableLabelProps) {
           }}
           src="./editable.svg"
           className="icon"
+          onClick={onEditIconClick}
         />
       </div>
     </div>

@@ -1,29 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.sass'
 
-import { Button } from './components/Button/Button';
-import { EditableLabel } from './components/EditableLabel/EditableLabel';
+import { EditableLabel } from './components/Editable/EditableLabel/EditableLabel';
 
 function App() {
   const [label, setLabel] = useState<string>('Editable Label');
-  const [isEditable, setIsEditable] = useState(false);
-  const [buttonText, setButtonText] = useState('Edit: off');
-  const [buttonClass, setButtonClass] = useState('red-ize');
-
-  const toggleEditable = () => {
-    console.log('toggle editable to', isEditable);
-    setIsEditable(!isEditable);
-  };
-
-  useEffect(() => {
-    if (isEditable) {
-      setButtonText('Edit: off');
-      setButtonClass('red-ize');
-    } else {
-      setButtonText('Edit: on');
-      setButtonClass('green-ize');
-    }
-  }, [isEditable]);
 
   return (
     <div className="App">
@@ -36,20 +17,9 @@ function App() {
 
       <br />
 
-      <Button
-        onClick={toggleEditable}
-        className={buttonClass}
-      >
-        {buttonText}
-      </Button>
-
-      <br /><br />
-
       <EditableLabel
         text={label}
         save={(text) => setLabel(text)}
-        editable={isEditable}
-        setEditable={setIsEditable}
       />
 
       <br />
