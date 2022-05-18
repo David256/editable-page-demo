@@ -16,6 +16,7 @@ export function EditableLabel(props: EditableLabelProps) {
     setEditable,
   } = props;
 
+  const [isOver, setIsOver] = useState(false);
   const [currentText, setCurrentText] = useState(text);
   const [className, setClassName] = useState<string>('EditableLabel');
   const ref = useRef<HTMLDivElement>();
@@ -23,7 +24,7 @@ export function EditableLabel(props: EditableLabelProps) {
   const textContent = `${text}`;
 
   useEffect(() => {
-    let newClassName = 'EditableLabel';
+    let newClassName = 'EditableLabel-field';
     if (editable) {
       newClassName = newClassName.concat(' Editable');
     }
@@ -56,15 +57,30 @@ export function EditableLabel(props: EditableLabelProps) {
 
   return (
     <div
-      ref={ref as unknown as React.LegacyRef<HTMLDivElement>}
-      className={className}
-      contentEditable={editable}
-      onBlur={onSave}
-      onKeyDown={keyDownHandler}
-      suppressContentEditableWarning={true}
-      dangerouslySetInnerHTML={{__html: text}}
+      className="EditableLabel"
+      onMouseEnter={() => setIsOver(true)}
+      onMouseLeave={() => setIsOver(false)}
     >
-      {/* {textContent || '<Empty field>'} */}
+      <div
+        ref={ref as unknown as React.LegacyRef<HTMLDivElement>}
+        className={className}
+        contentEditable={editable}
+        onBlur={onSave}
+        onKeyDown={keyDownHandler}
+        suppressContentEditableWarning={true}
+        dangerouslySetInnerHTML={{__html: text}}
+      >
+        {/* {textContent || '<Empty field>'} */}
+      </div>
+      <div className="EditableLabel-logo">
+        <img
+          style={{
+            display: isOver ? 'inline' : 'none'
+          }}
+          src="./editable.svg"
+          className="icon"
+        />
+      </div>
     </div>
   );
 }
