@@ -23,7 +23,7 @@ export function EditableLabel(props: EditableLabelProps) {
     }
     setClassName(newClassName);
     console.log('change className to', newClassName);
-  }, [editable]);
+  }, [editable, setClassName]);
 
   return (
     <div className={className}>
