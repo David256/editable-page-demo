@@ -48,8 +48,8 @@ export function EditableLabel(props: EditableLabelProps) {
     if (ref.current) {
       const current = ref.current as unknown as HTMLDivElement;
       console.log(current);
-      // setCurrentText(current.innerHTML);
-      setCurrentText(current.textContent || '');
+      setCurrentText(current.innerHTML);
+      // setCurrentText(current.textContent || '');
     }
     setEditable(false);
   }
@@ -62,8 +62,9 @@ export function EditableLabel(props: EditableLabelProps) {
       onBlur={onSave}
       onKeyDown={keyDownHandler}
       suppressContentEditableWarning={true}
+      dangerouslySetInnerHTML={{__html: text}}
     >
-      {textContent || '<Empty field>'}
+      {/* {textContent || '<Empty field>'} */}
     </div>
   );
 }
