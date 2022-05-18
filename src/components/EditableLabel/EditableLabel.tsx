@@ -26,7 +26,10 @@ export function EditableLabel(props: EditableLabelProps) {
   }, [editable, setClassName]);
 
   return (
-    <div className={className}>
+    <div
+      className={className}
+      contentEditable={editable}
+    >
       {text}
     </div>
   );
