@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import '../Editable.sass';
 import './EditableLabel.sass';
 
 export interface EditableLabelProps {
