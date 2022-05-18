@@ -13,11 +13,11 @@ function App() {
   const toggleEditable = () => {
     console.log('toggle editable to', isEditable);
     if (isEditable) {
-      setButtonText('Edit');
-      setButtonClass('');
-    } else {
-      setButtonText('No edit');
+      setButtonText('Edit: off');
       setButtonClass('red-ize');
+    } else {
+      setButtonText('Edit: on');
+      setButtonClass('green-ize');
     }
     setIsEditable(!isEditable);
   };
