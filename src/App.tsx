@@ -13,8 +13,9 @@ function App() {
       <h1>Editable Page Demo</h1>
 
       <p>
-        <strong>USAGE</strong>: click the button to toggle the editable state.
-        After modifying the field, click out of the component or press Escape to save.
+        <strong>USAGE</strong>: click to the edit button over each editable element
+        to toggle the editable state. After modifying the field, click out of
+        the component or press Escape to save.
       </p>
 
       <br />
