@@ -1,11 +1,13 @@
 .Editable
     display: inline-block
+    border-radius: 0.2em
 
     &-active
         border: 2px dashed #4c6b30
 
     &:hover
         cursor: text
+        box-shadow: 0px 0px 5px 1px rgba(0, 0, 128, 0.4)
 
     &-edit-button
         position: relative
@@ -16,3 +18,4 @@
         height: 16px
         position: absolute
         top: -0.5em
+        cursor: pointer
