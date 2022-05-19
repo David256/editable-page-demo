@@ -33,10 +33,8 @@ export function EditableLabel(props: EditableLabelProps) {
   }, [isEditable]);
 
   const onSave = () => {
-    console.log('saving...', currentText);
     if (ref.current) {
       const current = ref.current as unknown as HTMLDivElement;
-      console.log(current);
       setCurrentText(current.textContent || '');
     }
     setIsEditable(false);
