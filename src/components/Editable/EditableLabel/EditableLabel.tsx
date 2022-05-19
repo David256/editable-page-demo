@@ -19,28 +19,25 @@ export function EditableLabel(props: EditableLabelProps) {
   const [currentText, setCurrentText] = useState(text);
   const ref = useRef<HTMLDivElement>();
 
-  const textContent = `${text}`;
-
   // If `currentText` change, we save that value
   useEffect(() => {
     save(currentText);
   }, [currentText]);
 
-  const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    // setCurrentText(ref.current.innerHTML);
-    if (e.key === 'Escape') {
-      // console.log(ref.current.innerHTML);
-      onSave();
+  useEffect(() => {
+    if (isEditable && currentText === '') {
+      (ref.current as HTMLElement).textContent = '';
+    } else {
+      (ref.current as HTMLElement).focus();
     }
-  }
+  }, [isEditable]);
 
   const onSave = () => {
     console.log('saving...', currentText);
     if (ref.current) {
       const current = ref.current as unknown as HTMLDivElement;
       console.log(current);
-      setCurrentText(current.innerHTML);
-      // setCurrentText(current.textContent || '');
+      setCurrentText(current.textContent || '');
     }
     setIsEditable(false);
   }
@@ -55,11 +52,10 @@ export function EditableLabel(props: EditableLabelProps) {
         className="EditableLabel"
         contentEditable={isEditable}
         onBlur={onSave}
-        onKeyDown={keyDownHandler}
-        dangerouslySetInnerHTML={{__html: text}}
+        onKeyDown={(e) => e.key === 'Escape' && onSave()}
         suppressContentEditableWarning={true}
       >
-        {/* {textContent || '<Empty field>'} */}
+        {currentText || '<Empty field>'}
       </div>
     </Editable>
   );
