@@ -23,16 +23,17 @@ export function EditableDiv(props: EditableDivProps) {
   const [currentHTML, setCurrentHTML] = useState(html);
   const ref = useRef<HTMLDivElement>();
 
+  const htmlContent = `${currentHTML}`;
+
   // If `currentHTML` change, we save that value
   useEffect(() => {
     save(currentHTML);
   }, [currentHTML]);
 
   const onSave = () => {
-    console.log('saving...', currentHTML);
     if (ref.current) {
       const current = ref.current as unknown as HTMLDivElement;
-      console.log(current);
+      console.log('saving...', current.innerHTML);
       setCurrentHTML(current.innerHTML);
     }
     setIsEditable(false);
@@ -53,7 +54,7 @@ export function EditableDiv(props: EditableDivProps) {
         contentEditable={isEditable}
         onBlur={onSave}
         onKeyDown={(e) => e.key === 'Escape' && onSave()}
-        dangerouslySetInnerHTML={{__html: currentHTML}}
+        dangerouslySetInnerHTML={{__html: htmlContent}}
         suppressContentEditableWarning={true}
       ></div>
     </Editable>
